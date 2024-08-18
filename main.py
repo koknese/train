@@ -56,7 +56,8 @@ async def on_message(message):
         #elif message.channel == bridgeSB_3: #wunkcord
          #   embed_color = 0x00ffcc
 
-        embed = discord.Embed(title='SOE "SwagBalls Passenger Train"', colour=embed_color)        
+        embed = discord.Embed(title='SOE "SwagBalls Passenger Train"', colour=embed_color)  
+        embed.set_footer(text="Connecting the Swagosphere, one train at a time.")
         if not message.attachments and not message.stickers:
             embed.add_field(name=(str(message.author) + " from " + str(message.guild)), value=str(message.clean_content), inline=True)
             await send_to_others(message.channel, embed=embed)
@@ -73,7 +74,7 @@ async def on_message(message):
             embed.set_image(url=sticker.url)
             await send_to_others(message.channel, embed=embed)
 
-        embed.set_footer(text="Connecting the Swagosphere, one train at a time.")
+        
             
 @tree.command(
     name="ticket",
