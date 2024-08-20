@@ -157,11 +157,6 @@ async def tickets(interaction: discord.Interaction, mins: int):
     guild=discord.Object(ragecord),
 )
 async def kill(interaction: discord.Interaction, secs: int):
-    
-    bridgeSB_1 = bot.get_channel(1274386678831644753)  # Ragecord
-    bridgeSB_2 = bot.get_channel(1274458307716845608)  # SwagCord
-    bridgeSB_3 = bot.get_channel(1274668145243586673)
-    
     if interaction.user.id == 432437043956809738:
         asyncio.sleep(secs)
         sys.exit("Maintanance")
