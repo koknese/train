@@ -70,10 +70,6 @@ async def on_message(message):
             embed.add_field(name="Message", value=str(message.clean_content), inline=False)
             await send_to_others(message.channel, embed=embed)
         
-        elif not message.attachments and not message.stickers and ".png" in message.content:
-            embed.set_image(url=message.content)
-            await send_to_others(message.channel, embed=None)
-        
         elif message.attachments and not message.stickers:
             attachments = message.attachments[0]
             embed.set_image(url=attachments.url)
