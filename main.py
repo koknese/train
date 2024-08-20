@@ -176,12 +176,4 @@ async def kill(interaction: discord.Interaction, secs: int):
     else:
         await interaction.response.send_message("Missing permissions", ephemeral=True)
 
-@tree.command(
-    name="avatar",
-    guild=discord.Object(ragecord),
-)
-async def avatar(interaction: discord.Interaction):
-    await interaction.response.send_message(interaction.user.avatar)
-        
-
 bot.run(TOKEN)
