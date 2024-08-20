@@ -64,18 +64,21 @@ async def on_message(message):
 
         embed = discord.Embed(title='SOE "SwagBalls Passenger Train"', colour=embed_color)  
         embed.set_footer(text="Connecting the Swagosphere, one train at a time.")
+        embed.set_author(
+            name=f"{str(message.author)} from {str(message.guild)}",
+            icon_url=str(message.author.avatar)
+        )
         if not message.attachments and not message.stickers:
-            embed.add_field(name=(str(message.author) + " from " + str(message.guild)), value=str(message.clean_content), inline=True)
+            embed.add_field(name="Message", value=str(message.clean_content), inline=True)
             await send_to_others(message.channel, embed=embed)
-        
         elif message.attachments and not message.stickers:
-            embed.add_field(name=(str(message.author) + "from " + str(message.guild)), value=str("Sent an image!"), inline=True)
+            embed.add_field(name=(str(message.author) + " from " + str(message.guild)), value=str("Sent an image!"), inline=True)
             attachments = message.attachments[0]
             embed.set_image(url=attachments.url)
             await send_to_others(message.channel, embed=embed)
         
         elif not message.attachments and message.stickers:
-            embed.add_field(name=(str(message.author) + "from " + str(message.guild)), value=str("Sent a sticker!"), inline=True)
+            embed.add_field(name=(str(message.author) + " from " + str(message.guild)), value=str("Sent a sticker!"), inline=True)
             sticker = message.stickers[0]
             embed.set_image(url=sticker.url)
             await send_to_others(message.channel, embed=embed)
@@ -162,7 +165,13 @@ async def kill(interaction: discord.Interaction, secs: int):
         sys.exit("Maintanance")
     else:
         await interaction.response.send_message("Missing permissions", ephemeral=True)
-        
+
+@tree.command(
+    name="avatar",
+    guild=discord.Object(ragecord),
+)
+async def avatar(interaction: discord.Interaction):
+    await interaction.response.send_message(interaction.user.avatar)
         
 
 bot.run(TOKEN)
