@@ -8,6 +8,7 @@ import os
 import asyncio
 import requests
 import sys
+import re
 
 TOKEN = 'MTI3MjI3MDc4MzQyMjUzMzcxMw.GzVVEr._RqefcWtLHIeeCnEhIvArnU9uYoOfi9jBNWsVI'
 
@@ -50,6 +51,17 @@ async def on_message(message):
             await bridgeSB_2.send(embed=embed)
         if original_channel != bridgeSB_3:
             await bridgeSB_3.send(embed=embed)
+            
+    async def embeddium(original_channel, links, embed=None):
+        if original_channel != bridgeSB_1:
+            await bridgeSB_1.send(embed=embed)
+            await bridgeSB_1.reply(links)
+        if original_channel != bridgeSB_2:
+            await bridgeSB_2.send(links, embed=embed)
+            await bridgeSB_2.reply(links)
+        if original_channel != bridgeSB_3:
+            await bridgeSB_3.send(links, embed=embed)
+            await bridgeSB_3.reply(links)
         
     if message.channel in (bridgeSB_1, bridgeSB_2, bridgeSB_3):
         embed_color = 0xffffff  # Default color
@@ -72,6 +84,21 @@ async def on_message(message):
             embed.add_field(name="Message", value=str(message.clean_content), inline=True)
             await send_to_others(message.channel, embed=embed)
             
+            embedlinks = ["https://youtube.com", "https://tenor.com", "https://twitter.com"]
+            
+            if any(link in message.clean_content for link in embedlinks):
+                extracted_links = []
+                for link in embedlinks:
+                    if link in message.clean_content:
+                        # Use regular expression to extract the full URL
+                        pattern = re.escape(link) + r'[^\s]*'
+                        found_links = re.findall(pattern, message.clean_content)
+                        extracted_links.extend(found_links)
+                        
+                        links_string = '\n'.join(extracted_links)        
+                        
+                        await embeddium(message.channel, links_string, embed=None)
+        
         elif message.attachments and not message.stickers and not message.clean_content:
             embed.add_field(name=(str(message.author) + " from " + str(message.guild)), value=str("Sent an image!"), inline=True)
             attachments = message.attachments[0]
