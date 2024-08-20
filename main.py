@@ -7,6 +7,7 @@ import discord
 import os
 import asyncio
 import requests
+import sys
 
 TOKEN = 'MTI3MjI3MDc4MzQyMjUzMzcxMw.GzVVEr._RqefcWtLHIeeCnEhIvArnU9uYoOfi9jBNWsVI'
 
@@ -28,6 +29,11 @@ async def on_ready():
     await tree.sync(guild=discord.Object(ragecord))
     await tree.sync(guild=discord.Object(xertuncord))
 
+bridgeSB_1 = bot.get_channel(1274386678831644753)  # Ragecord
+bridgeSB_2 = bot.get_channel(1274458307716845608)  # SwagCord
+bridgeSB_3 = bot.get_channel(1274668145243586673)  # Xertuncord
+    
+    
 @bot.listen()
 async def on_message(message):
     if message.author.bot:
@@ -63,6 +69,10 @@ async def on_message(message):
         if not message.attachments and not message.stickers:
             embed.add_field(name="Message", value=str(message.clean_content), inline=False)
             await send_to_others(message.channel, embed=embed)
+        
+        elif not message.attachments and not message.stickers and ".png" in message.content:
+            embed.set_image(url=message.content)
+            await send_to_others(message.channel, embed=None)
         
         elif message.attachments and not message.stickers:
             attachments = message.attachments[0]
@@ -144,4 +154,23 @@ async def tickets(interaction: discord.Interaction, mins: int):
         else:
             await interaction.response.send_message("```LOW BALANCE\nPlease try lower amount.\n-# This might mean that you dont have enough **cash**, so make sure to withdraw some!```")
         
+@tree.command(
+    name="depot",
+    description="Debug: Set the bot for maintanance",
+    guild=discord.Object(ragecord),
+)
+async def kill(interaction: discord.Interaction, secs: int):
+    
+    bridgeSB_1 = bot.get_channel(1274386678831644753)  # Ragecord
+    bridgeSB_2 = bot.get_channel(1274458307716845608)  # SwagCord
+    bridgeSB_3 = bot.get_channel(1274668145243586673)
+    
+    if interaction.user.id == 432437043956809738:
+        asyncio.sleep(secs)
+        sys.exit("Maintanance")
+    else:
+        await interaction.response.send_message("Missing permissions", ephemeral=True)
+        
+        
+
 bot.run(TOKEN)
