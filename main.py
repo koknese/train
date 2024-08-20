@@ -71,8 +71,18 @@ async def on_message(message):
         if not message.attachments and not message.stickers:
             embed.add_field(name="Message", value=str(message.clean_content), inline=True)
             await send_to_others(message.channel, embed=embed)
-        elif message.attachments and not message.stickers:
+            
+        elif message.attachments and not message.stickers and not message.clean_content:
             embed.add_field(name=(str(message.author) + " from " + str(message.guild)), value=str("Sent an image!"), inline=True)
+            attachments = message.attachments[0]
+            embed.set_image(url=attachments.url)
+            await send_to_others(message.channel, embed=embed)
+
+        # https://priv.au/image_proxy?url=https%3A%2F%2Fpreview.redd.it%2Fzh4z7cem9kg51.png%3Fauto%3Dwebp%26s%3D90ff37f3925e3d8dfe41a88aafcf8f35a414d5b7&h=53cb9d9c3e788179e40d2734bbe2c589fbf4a8f974421588080b194e123625ee
+        # ^^^^^ me, probably
+        
+        elif message.attachments and message.clean_content and not message.stickers:
+            embed.add_field(name=(str(message.author) + " from " + str(message.guild)), value=str(message.clean_content), inline=True)
             attachments = message.attachments[0]
             embed.set_image(url=attachments.url)
             await send_to_others(message.channel, embed=embed)
