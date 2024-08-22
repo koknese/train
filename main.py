@@ -55,13 +55,13 @@ async def on_message(message):
     async def embeddium(original_channel, links, embed=None):
         if original_channel != bridgeSB_1:
             await bridgeSB_1.send(embed=embed)
-            await bridgeSB_1.reply(links)
+            await bridgeSB_1.send(links)
         if original_channel != bridgeSB_2:
             await bridgeSB_2.send(links, embed=embed)
-            await bridgeSB_2.reply(links)
+            await bridgeSB_2.send(links)
         if original_channel != bridgeSB_3:
             await bridgeSB_3.send(links, embed=embed)
-            await bridgeSB_3.reply(links)
+            await bridgeSB_3.send(links)
         
     if message.channel in (bridgeSB_1, bridgeSB_2, bridgeSB_3):
         embed_color = 0xffffff  # Default color
