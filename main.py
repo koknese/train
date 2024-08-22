@@ -90,6 +90,7 @@ async def on_message(message):
             if match:
                 url = match.group()
                 await embeddium(message.channel, url, embed=embed)
+            
         
         elif message.attachments and not message.stickers and not message.clean_content:
             embed.add_field(name=(str(message.author) + " from " + str(message.guild)), value=str("Sent an image!"), inline=True)
