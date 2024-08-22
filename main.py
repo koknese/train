@@ -39,7 +39,7 @@ bridgeSB_3 = bot.get_channel(1274668145243586673)  # Xertuncord
 async def on_message(message):
     if message.author.bot:
         return
-    elif messsge.author.id == 555186744593743897:
+    elif message.author.id == 555186744593743897:
     	return
     bridgeSB_1 = bot.get_channel(1274386678831644753)  # Ragecord
     bridgeSB_2 = bot.get_channel(1274458307716845608)  # SwagCord
