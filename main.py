@@ -84,9 +84,9 @@ async def on_message(message):
             embed.add_field(name="Message", value=str(message.clean_content), inline=True)
             await send_to_others(message.channel, embed=embed)
             
+            url_pattern = r'https?://[^\s]+'
+            urls = re.findall(url_pattern, message.content)
             if any(urls in message.content):
-                url_pattern = r'https?://[^\s]+'
-                urls = re.findall(url_pattern, message.content)
                 await embeddium(message.channel, urls, embed=None)
         
         elif message.attachments and not message.stickers and not message.clean_content:
