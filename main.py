@@ -84,20 +84,13 @@ async def on_message(message):
             embed.add_field(name="Message", value=str(message.clean_content), inline=True)
             await send_to_others(message.channel, embed=embed)
             
-            embedlinks = ["https://youtube.com", "https://tenor.com", "https://twitter.com"]
             
-            if any(link in message.clean_content for link in embedlinks):
-                extracted_links = []
-                for link in embedlinks:
-                    if link in message.clean_content:
-                        # Use regular expression to extract the full URL
-                        pattern = re.escape(link) + r'[^\s]*'
-                        found_links = re.findall(pattern, message.clean_content)
-                        extracted_links.extend(found_links)
-                        
-                        links_string = '\n'.join(extracted_links)        
-                        
-                        await embeddium(message.channel, links_string, embed=None)
+            
+            url_pattern = r'https?://[^\s]+'
+            urls = re.findall(url_pattern, text)
+            
+            if any(urls in message.clean_content):
+                await embeddium(message.channel, urls, embed=None)
         
         elif message.attachments and not message.stickers and not message.clean_content:
             embed.add_field(name=(str(message.author) + " from " + str(message.guild)), value=str("Sent an image!"), inline=True)
