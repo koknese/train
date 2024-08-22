@@ -86,7 +86,7 @@ async def on_message(message):
             
             url_pattern = r'https?://[^\s]+'
             urls = re.findall(url_pattern, message.content)
-            if any(urls in message.content):
+            if any(str(urls) in message.content):
                 await embeddium(message.channel, urls, embed=None)
         
         elif message.attachments and not message.stickers and not message.clean_content:
