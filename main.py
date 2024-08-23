@@ -70,11 +70,6 @@ async def on_message(message):
         return
     elif message.author.id == 555186744593743897:
     	return
- 
-    bridgeSB_1 = bot.get_channel(1274386678831644753)  # Ragecord
-    bridgeSB_2 = bot.get_channel(1274458307716845608)  # SwagCord
-    bridgeSB_3 = bot.get_channel(1274668145243586673)  # Xertuncord
-    bridgeSB_4 = bot.get_channel(1276559880093962250)  # Shark Park
     
     async def send_to_others(original_channel, embed=None):
         for station in bot.stations:
