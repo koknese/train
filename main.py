@@ -14,13 +14,28 @@ TOKEN = 'MTI3MjI3MDc4MzQyMjUzMzcxMw.GzVVEr._RqefcWtLHIeeCnEhIvArnU9uYoOfi9jBNWsV
 
 intents = discord.Intents.all()
 intents.members = True
+intents.typing = True
+intents.message_content = True
 bot = commands.Bot(command_prefix="(", intents=intents)
 
 xertuncord = 1114565796404928594
 ragecord = 1219008436428345528 
 swagballs = 938728183203758080
+sharkpark = 855454505478127647
 
 tree = bot.tree
+
+async def typingIndicator(original_channel, typer):
+    for station in bot.stations:
+        if station is not None and original_channel != station:
+            await station.send(f"-# {typer} is typing...")
+            print(f"Sent typing notification to {station} from {original_channel}")
+
+@bot.event
+async def on_typing(channel: discord.abc.Messageable, user: discord.Member | discord.User, when):
+    print(f'Typing detected in {channel} by {user}')
+    if channel in bot.stations:
+        await typingIndicator(channel, user)
 
 @bot.event
 async def on_ready():
@@ -29,21 +44,38 @@ async def on_ready():
     await tree.sync(guild=discord.Object(swagballs))
     await tree.sync(guild=discord.Object(ragecord))
     await tree.sync(guild=discord.Object(xertuncord))
+    await tree.sync(guild=discord.Object(sharkpark))
 
-bridgeSB_1 = bot.get_channel(1274386678831644753)  # Ragecord
-bridgeSB_2 = bot.get_channel(1274458307716845608)  # SwagCord
-bridgeSB_3 = bot.get_channel(1274668145243586673)  # Xertuncord
-    
-    
+    # Retrieve channels after the bot is ready
+    bridgeSB_1 = bot.get_channel(1274386678831644753)  # Ragecord
+    bridgeSB_2 = bot.get_channel(1274458307716845608)  # SwagCord
+    bridgeSB_3 = bot.get_channel(1274668145243586673)  # Xertuncord
+    bridgeSB_4 = bot.get_channel(1276559880093962250)  # Shark Park
+
+    # Debug: Ensure channels are retrieved correctly
+    print(f'bridgeSB_1: {bridgeSB_1}')
+    print(f'bridgeSB_2: {bridgeSB_2}')
+    print(f'bridgeSB_3: {bridgeSB_3}')
+    print(f'bridgeSB_4: {bridgeSB_4}')
+
+    # Store channels in a list
+    stations = [bridgeSB_1, bridgeSB_2, bridgeSB_3, bridgeSB_4]
+
+    # Store the stations list in the bot object for later use
+    bot.stations = stations
+
+
 @bot.listen()
 async def on_message(message):
     if message.author.bot:
         return
     elif message.author.id == 555186744593743897:
     	return
+ 
     bridgeSB_1 = bot.get_channel(1274386678831644753)  # Ragecord
     bridgeSB_2 = bot.get_channel(1274458307716845608)  # SwagCord
     bridgeSB_3 = bot.get_channel(1274668145243586673)  # Xertuncord
+    bridgeSB_4 = bot.get_channel(1276559880093962250)  # Shark Park
     
     async def send_to_others(original_channel, embed=None):
         if original_channel != bridgeSB_1:
@@ -52,6 +84,8 @@ async def on_message(message):
             await bridgeSB_2.send(embed=embed)
         if original_channel != bridgeSB_3:
             await bridgeSB_3.send(embed=embed)
+        if original_channel != bridgeSB_4:
+            await bridgeSB_4.send(embed=embed)
             
     async def embeddium(original_channel, links, embed=None):
         if original_channel != bridgeSB_1:
@@ -63,8 +97,11 @@ async def on_message(message):
         if original_channel != bridgeSB_3:
             await bridgeSB_3.send(links, embed=embed)
             await bridgeSB_3.send(links)
+        if original_channel != bridgeSB_4:
+            await bridgeSB_4.send(links, embed=embed)
+            await bridgeSB_4.send(links)
         
-    if message.channel in (bridgeSB_1, bridgeSB_2, bridgeSB_3):
+    if message.channel in (bridgeSB_1, bridgeSB_2, bridgeSB_3, bridgeSB_4):
         embed_color = 0xffffff  # Default color
         if message.channel == bridgeSB_1: #ragecord
             embed_color = 0xffffff
@@ -72,8 +109,8 @@ async def on_message(message):
             embed_color = 0xffdf00
         elif message.channel == bridgeSB_3: #xertuncord
             embed_color = 0xf78eff
-        #elif message.channel == bridgeSB_3: #wunkcord
-         #   embed_color = 0x00ffcc
+        elif message.channel == bridgeSB_4: #shark park
+            embed_color = 0x2e008b
 
         embed = discord.Embed(title='SOE "SwagBalls Passenger Train"', colour=embed_color)  
         embed.set_footer(text="Connecting the Swagosphere, one train at a time.")
@@ -119,7 +156,7 @@ async def on_message(message):
 @tree.command(
     name="ticket",
     description="Buy timed tickets for the SwagBalls Passanger Train",
-    guilds=[discord.Object(swagballs), discord.Object(ragecord), discord.Object(xertuncord)],
+    guilds=[discord.Object(swagballs), discord.Object(ragecord), discord.Object(xertuncord), discord.Object(sharkpark)],
 )
 @app_commands.describe(mins="How many minutes do you want your ticket to be usable for. 1min:1000UBUX ratio.")
 async def tickets(interaction: discord.Interaction, mins: int):
@@ -165,6 +202,8 @@ async def tickets(interaction: discord.Interaction, mins: int):
                     return 1274385477126062182
                 elif interaction.guild_id == xertuncord:
                 	return 1274668418506686527
+                elif interaction.guild_id == sharkpark:
+                    return 1276560153688408130
             
             def StationChannelDetermine():
                 if interaction.guild_id == swagballs:
@@ -173,6 +212,8 @@ async def tickets(interaction: discord.Interaction, mins: int):
                     return 1274386678831644753
                 elif interaction.guild_id == xertuncord:
                     return 1274668145243586673
+                elif interaction.guild_id == sharkpark:
+                    return 1276559880093962250
             
             await interaction.response.send_message(f"### Transaction succesful!\nYou bought {mins} ticket(s) to use in the <#{StationChannelDetermine()}> station.\n{1000 * mins} UBUX have been deducted from your cash account.\n```SENDER: {interaction.user}\nBENEFACTOR(S): 90% - SOE.SWAG.PSNG.TRAN///10% - AWSM.SCE.CNGL.LTD\nAMOUNT: {1000 * mins}.\nTHANK YOU FOR USING OUR SERVICES!```")
             await interaction.user.add_roles(discord.Object(TicketRoleIdDetermine()))
@@ -197,4 +238,6 @@ async def kill(interaction: discord.Interaction, secs: int):
     else:
         await interaction.response.send_message("Missing permissions", ephemeral=True)
 
+
 bot.run(TOKEN)
+
