@@ -30,6 +30,8 @@ async def typingIndicator(original_channel, typer):
         if station is not None and original_channel != station:
             await station.send(f"-# {typer} is typing...")
             print(f"Sent typing notification to {station} from {original_channel}")
+        elif message.author.id == 555186744593743897:
+    	    return
 
 @bot.event
 async def on_typing(channel: discord.abc.Messageable, user: discord.Member | discord.User, when):
