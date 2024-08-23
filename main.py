@@ -77,14 +77,9 @@ async def on_message(message):
     bridgeSB_4 = bot.get_channel(1276559880093962250)  # Shark Park
     
     async def send_to_others(original_channel, embed=None):
-        if original_channel != bridgeSB_1:
-            await bridgeSB_1.send(embed=embed)
-        if original_channel != bridgeSB_2:
-            await bridgeSB_2.send(embed=embed)
-        if original_channel != bridgeSB_3:
-            await bridgeSB_3.send(embed=embed)
-        if original_channel != bridgeSB_4:
-            await bridgeSB_4.send(embed=embed)
+        for station in bot.stations:
+            if station is not None and original_channel != station:
+                await station.send(embed=embed)
             
     async def embeddium(original_channel, links, embed=None):
         if original_channel != bridgeSB_1:
