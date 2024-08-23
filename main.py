@@ -16,7 +16,7 @@ intents = discord.Intents.all()
 intents.members = True
 intents.typing = True
 intents.message_content = True
-bot = commands.Bot(command_prefix="(", intents=intents)
+bot = commands.Bot(intents=intents)
 
 xertuncord = 1114565796404928594
 ragecord = 1219008436428345528 
@@ -72,7 +72,7 @@ async def on_message(message):
         return
     elif message.author.id == 555186744593743897:
         yummer = bot.get_user(555186744593743897)
-        yummer.send("https://cdn.discordapp.com/attachments/1274458307716845608/1276602958154436701/youtube_ggCuKpL50Uw_1280x720_h264.mp4?ex=66ca20a7&is=66c8cf27&hm=4f3e6cd6d404c784086fee3122a65e35887dc8b2ecd5e7072e4d5293bcc8254c&")
+        await yummer.send("https://cdn.discordapp.com/attachments/1274458307716845608/1276602958154436701/youtube_ggCuKpL50Uw_1280x720_h264.mp4?ex=66ca20a7&is=66c8cf27&hm=4f3e6cd6d404c784086fee3122a65e35887dc8b2ecd5e7072e4d5293bcc8254c&")
     
     async def send_to_others(original_channel, embed=None):
         for station in bot.stations:
@@ -113,6 +113,9 @@ async def on_message(message):
             if match:
                 url = match.group()
                 await embeddium(message.channel, url, embed=embed)
+        
+        elif "https://homestuck.com/" in message.clean_content:
+            await message.channel.send("https://priv.au/image_proxy?url=https%3A%2F%2Fpbs.twimg.com%2Fmedia%2FGP6nP0waAAAZ9vV.jpg&h=21803ef4165f712a386d8f22dc34df3000a387b127a1e4b2f8eb08e6ca01159b")
             
         
         elif message.attachments and not message.stickers and not message.clean_content:
