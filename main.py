@@ -16,7 +16,7 @@ intents = discord.Intents.all()
 intents.members = True
 intents.typing = True
 intents.message_content = True
-bot = commands.Bot(intents=intents)
+bot = commands.Bot(command_prefix = '⅜', intents=intents)
 
 xertuncord = 1114565796404928594
 ragecord = 1219008436428345528 
@@ -71,8 +71,7 @@ async def on_message(message):
     if message.author.bot:
         return
     elif message.author.id == 555186744593743897:
-        yummer = bot.get_user(555186744593743897)
-        await yummer.send("https://cdn.discordapp.com/attachments/1274458307716845608/1276602958154436701/youtube_ggCuKpL50Uw_1280x720_h264.mp4?ex=66ca20a7&is=66c8cf27&hm=4f3e6cd6d404c784086fee3122a65e35887dc8b2ecd5e7072e4d5293bcc8254c&")
+        return
     
     async def send_to_others(original_channel, embed=None):
         for station in bot.stations:
