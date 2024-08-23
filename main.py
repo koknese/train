@@ -77,29 +77,22 @@ async def on_message(message):
                 await station.send(embed=embed)
             
     async def embeddium(original_channel, links, embed=None):
-        if original_channel != bridgeSB_1:
-            await bridgeSB_1.send(embed=embed)
-            await bridgeSB_1.send(links)
-        if original_channel != bridgeSB_2:
-            await bridgeSB_2.send(links, embed=embed)
-            await bridgeSB_2.send(links)
-        if original_channel != bridgeSB_3:
-            await bridgeSB_3.send(links, embed=embed)
-            await bridgeSB_3.send(links)
-        if original_channel != bridgeSB_4:
-            await bridgeSB_4.send(links, embed=embed)
-            await bridgeSB_4.send(links)
+        for station in bot.stations:
+            if station is not None and original_channel != station:
+                await station.send(embed=embed)
+                await station.send(links)
+                
+    channel_colors = {
+        bot.stations[0]: 0xffffff,  # Ragecord
+        bot.stations[1]: 0xffdf00,  # SwagCord
+        bot.stations[2]: 0xf78eff,  # Xertuncord
+        bot.stations[3]: 0x2e008b,  # Shark Park
+    }
+
+    if message.channel in bot.stations:
+        embed_color = channel_colors[message.channel]
+
         
-    if message.channel in (bridgeSB_1, bridgeSB_2, bridgeSB_3, bridgeSB_4):
-        embed_color = 0xffffff  # Default color
-        if message.channel == bridgeSB_1: #ragecord
-            embed_color = 0xffffff
-        elif message.channel == bridgeSB_2: #swagcord
-            embed_color = 0xffdf00
-        elif message.channel == bridgeSB_3: #xertuncord
-            embed_color = 0xf78eff
-        elif message.channel == bridgeSB_4: #shark park
-            embed_color = 0x2e008b
 
         embed = discord.Embed(title='SOE "SwagBalls Passenger Train"', colour=embed_color)  
         embed.set_footer(text="Connecting the Swagosphere, one train at a time.")
