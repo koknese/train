@@ -33,7 +33,6 @@ async def typingIndicator(original_channel, typer):
 
 @bot.event
 async def on_typing(channel: discord.abc.Messageable, user: discord.Member | discord.User, when):
-    print(f'Typing detected in {channel} by {user}')
     if channel in bot.stations:
         await typingIndicator(channel, user)
 
