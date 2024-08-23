@@ -28,7 +28,7 @@ tree = bot.tree
 async def typingIndicator(original_channel, typer):
     for station in bot.stations:
         if station is not None and original_channel != station:
-            await station.send(f"-# {typer} is typing...")
+            await station.send(f"-# <a:typing:1276601718355918923> {typer} is typing...")
             print(f"Sent typing notification to {station} from {original_channel}")
         elif typer.id == 555186744593743897:
     	    return
@@ -71,7 +71,8 @@ async def on_message(message):
     if message.author.bot:
         return
     elif message.author.id == 555186744593743897:
-    	return
+        yummer = bot.get_user(555186744593743897)
+        yummer.send("https://cdn.discordapp.com/attachments/1274458307716845608/1276602958154436701/youtube_ggCuKpL50Uw_1280x720_h264.mp4?ex=66ca20a7&is=66c8cf27&hm=4f3e6cd6d404c784086fee3122a65e35887dc8b2ecd5e7072e4d5293bcc8254c&")
     
     async def send_to_others(original_channel, embed=None):
         for station in bot.stations:
