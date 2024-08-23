@@ -30,7 +30,7 @@ async def typingIndicator(original_channel, typer):
         if station is not None and original_channel != station:
             await station.send(f"-# {typer} is typing...")
             print(f"Sent typing notification to {station} from {original_channel}")
-        elif message.author.id == 555186744593743897:
+        elif typer.id == 555186744593743897:
     	    return
 
 @bot.event
