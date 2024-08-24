@@ -25,19 +25,6 @@ sharkpark = 855454505478127647
 
 tree = bot.tree
 
-async def typingIndicator(original_channel, typer):
-    for station in bot.stations:
-        if station is not None and original_channel != station:
-            await station.send(f"-# <a:typing:1276601718355918923> {typer} is typing...")
-            print(f"Sent typing notification to {station} from {original_channel}")
-        elif typer.id == 555186744593743897:
-    	    return
-
-@bot.event
-async def on_typing(channel: discord.abc.Messageable, user: discord.Member | discord.User, when):
-    if channel in bot.stations:
-        await typingIndicator(channel, user)
-
 @bot.event
 async def on_ready():
     sent_today = False
