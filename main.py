@@ -1,16 +1,14 @@
 from discord import app_commands
 from discord.utils import get # New import
 from discord.ext import commands
-from random import randint
 from discord.ext import commands, tasks
 import discord
-import os
 import asyncio
 import requests
 import sys
 import re
 
-TOKEN = 'MTI3MjI3MDc4MzQyMjUzMzcxMw.GzVVEr._RqefcWtLHIeeCnEhIvArnU9uYoOfi9jBNWsVI'
+TOKEN = 'BOT TOKEN'
 
 intents = discord.Intents.all()
 intents.members = True
@@ -56,8 +54,6 @@ async def on_ready():
 @bot.listen()
 async def on_message(message):
     if message.author.bot:
-        return
-    elif message.author.id == 555186744593743897:
         return
     
     async def send_to_others(original_channel, embed=None):
